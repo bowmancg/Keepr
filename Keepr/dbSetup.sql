@@ -1,11 +1,11 @@
--- Active: 1682460182546@@SG-codeworks-7498-mysql-master.servers.mongodirector.com@3306@sandbox
+-- Active: 1682476661572@@SG-codeworks-7498-mysql-master.servers.mongodirector.com@3306@sandbox
 CREATE TABLE IF NOT EXISTS accounts(
   id VARCHAR(255) NOT NULL primary key COMMENT 'primary key',
   createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',
   updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Last Update',
   name varchar(255) COMMENT 'User Name',
   email varchar(255) COMMENT 'User Email',
-  coverImg VARCHAR(255) COMMENT 'User cover image'
+  coverImg VARCHAR(255) COMMENT 'User cover image',
   picture varchar(255) COMMENT 'User Picture'
 ) default charset utf8 COMMENT '';
 
@@ -13,7 +13,7 @@ CREATE TABLE
 keeps(
 id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
 name VARCHAR(50) NOT NULL,
-description VARCHAR(400)) NOT NULL,
+description VARCHAR(1000) NOT NULL,
 img VARCHAR(255) NOT NULL,
 views INT NOT NULL,
 kept INT NOT NULL,
@@ -22,6 +22,8 @@ FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE
 ) DEFAULT charset utf8mb4 COMMENT '';
 
 DELETE FROM accounts WHERE id = '';
+
+ALTER TABLE keeps MODIFY description VARCHAR(1000);
 
 INSERT INTO
 keeps (
@@ -51,7 +53,7 @@ vaults(
   id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
   creatorId VARCHAR(255) NOT NULL,
   name VARCHAR(50) NOT NULL,
-  description VARCHAR(255) NOT NULL,
+  description VARCHAR(1000) NOT NULL,
   img VARCHAR(255) NOT NULL,
   isPrivate BOOLEAN NOT NULL DEFAULT FALSE,
   FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE
@@ -91,8 +93,12 @@ vaultKeeps(
   FOREIGN KEY (keepId) REFERENCES keeps(id) ON DELETE CASCADE
 ) DEFAULT charset utf8mb4 COMMENT '';
 
-ALTER TABLE ADD
 
 DELETE FROM accounts WHERE id = '';
 
 SELECT
+vk.*,
+vk.id vaultKeepId,
+a.*
+FROM vaultKeeps vk
+JOIN accounts a ON a.id = vk.creatorId;
