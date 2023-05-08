@@ -31,4 +31,10 @@ public class AccountService
     original.Picture = editData.Picture.Length > 0 ? editData.Picture : original.Picture;
     return _repo.Edit(original);
   }
+
+  internal List<Vault> GetVaults(string creatorId)
+  {
+    List<Vault> vaults = _repo.GetVaults(creatorId);
+    return vaults;
+  }
 }

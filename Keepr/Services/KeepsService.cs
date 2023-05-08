@@ -37,9 +37,13 @@ namespace Keepr.Services
             return keep;
         }
 
-        internal Keep EditKeep(Keep keepData, int keepId)
+        internal Keep EditKeep(Keep keepData, int keepId, string userId)
         {
             Keep originalKeep = this.GetOne(keepId);
+            if (originalKeep.CreatorId != userId)
+            {
+                throw new Exception("You cannot edit this.");
+            }
             originalKeep.Name = keepData.Name ?? originalKeep.Name;
             originalKeep.Description = keepData.Description ?? originalKeep.Description;
             originalKeep.Img = keepData.Img ?? originalKeep.Img;

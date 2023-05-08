@@ -13,9 +13,9 @@ namespace Keepr.Repositories
         {
             string sql = @"
             INSERT INTO vaults
-            (name, description, img, creatorId)
+            (name, description, img, isPrivate, creatorId)
             VALUES
-            (@name, @description, @img, @creatorId);
+            (@name, @description, @img, @isPrivate, @creatorId);
 
             SELECT
             v.*,

@@ -24,5 +24,15 @@ namespace Keepr.Services
             List<Keep> keeps = _repo.GetKeeps(profileId);
             return keeps;
         }
+
+        internal List<Vault> GetVaults(string profileId, string userId)
+        {
+            List<Vault> vaults = _repo.GetVaults(profileId);
+            if (profileId != userId)
+            {
+                vaults = vaults.FindAll(v => v.IsPrivate == false);
+            }
+            return vaults;
+        }
     }
 }

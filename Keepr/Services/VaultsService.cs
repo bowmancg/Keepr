@@ -17,19 +17,23 @@ namespace Keepr.Services
             return vault;
         }
 
-        internal Vault GetOne(int vaultId)
+        internal Vault GetOne(int vaultId, string userId)
         {
             Vault vault = _repo.GetOne(vaultId);
             if (vault == null)
             {
                 throw new Exception($"Bad Id: {vaultId}");
             }
+            if (vault.IsPrivate == true && vault.CreatorId != userId)
+            {
+                throw new Exception($"{vault.Name} is private.");
+            }
             return vault;
         }
 
         internal Vault EditVault(Vault vaultData, int vaultId)
         {
-            Vault originalVault = this.GetOne(vaultId);
+            Vault originalVault = _repo.GetOne(vaultId);
             originalVault.Name = vaultData.Name ?? originalVault.Name;
             originalVault.Description = vaultData.Description ?? originalVault.Description;
             originalVault.Img = vaultData.Img ?? originalVault.Img;
@@ -40,7 +44,7 @@ namespace Keepr.Services
 
         internal string Remove(int vaultId)
         {
-            Vault vault = this.GetOne(vaultId);
+            Vault vault = _repo.GetOne(vaultId);
             int rowsAffected = _repo.Remove(vaultId);
             if (rowsAffected == 0)
             {
@@ -53,9 +57,9 @@ namespace Keepr.Services
             return $"{vault.Name} has been deleted.";
         }
 
-        internal List<VaultKeep> GetVaultKeeps(int vaultId)
+        internal List<VaultKeep> GetVaultKeeps(int vaultId, string accountId)
         {
-            List<VaultKeep> vaultKeeps = _vaultKeepsService.GetVaultKeeps(vaultId);
+            List<VaultKeep> vaultKeeps = _vaultKeepsService.GetVaultKeeps(vaultId, accountId);
             return vaultKeeps;
         }
     }

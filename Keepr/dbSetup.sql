@@ -9,6 +9,12 @@ CREATE TABLE IF NOT EXISTS accounts(
   picture varchar(255) COMMENT 'User Picture'
 ) default charset utf8 COMMENT '';
 
+SELECT
+    v.*,
+    a.*
+    FROM vaults v
+    JOIN accounts a ON a.id = v.creatorId;
+
 CREATE TABLE 
 keeps(
 id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
@@ -80,7 +86,8 @@ VALUES (
 SELECT
 v.*, a.*
 FROM vaults v
-JOIN accounts a ON a.id = v.creatorId;
+JOIN accounts a ON a.id = v.creatorId
+WHERE v.id = 61;
 
 CREATE TABLE
 vaultKeeps(
@@ -102,3 +109,10 @@ vk.id vaultKeepId,
 a.*
 FROM vaultKeeps vk
 JOIN accounts a ON a.id = vk.creatorId;
+
+SELECT
+    v.*,
+    a.*
+    FROM vaults v
+    JOIN accounts a ON v.creatorId = a.id;
+    -- WHERE v.creatorId = @creatorId;
