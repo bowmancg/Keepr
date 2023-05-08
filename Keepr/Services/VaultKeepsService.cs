@@ -5,12 +5,14 @@ namespace Keepr.Services
         private readonly VaultKeepsRepository _repo;
         private readonly VaultsRepository _vaultRepo;
         private readonly KeepsRepository _keepRepo;
+        private readonly VaultsService _vaultsService;
 
-        public VaultKeepsService(VaultKeepsRepository repo, VaultsRepository vaultRepo, KeepsRepository keepRepo)
+        public VaultKeepsService(VaultKeepsRepository repo, VaultsRepository vaultRepo, KeepsRepository keepRepo, VaultsService vaultsService)
         {
             _repo = repo;
             _vaultRepo = vaultRepo;
             _keepRepo = keepRepo;
+            _vaultsService = vaultsService;
         }
 
         internal VaultKeep CreateVaultKeep(VaultKeep vaultKeepData)
@@ -43,14 +45,15 @@ namespace Keepr.Services
             return vaultKeep;
         }
 
-        internal List<VaultKeep> GetVaultKeeps(int vaultId, string accountId)
+        internal List<KeptKeep> GetVaultKeeps(int vaultId, string userId)
         {
-            Vault vault = _vaultRepo.GetOne(vaultId);
-            if (vault.IsPrivate == true && vault.CreatorId != accountId)
-            {
-                throw new Exception($"{vault.Name} is private.");
-            }
-            List<VaultKeep> vaultKeeps = _repo.GetVaultKeeps(vaultId);
+            Vault vault = _vaultsService.GetOne(vaultId, userId);
+            
+            // if (vault.IsPrivate == true && vault.CreatorId != accountId)
+            // {
+            //     throw new Exception($"{vault.Name} is private.");
+            // }
+            List<KeptKeep> vaultKeeps = _repo.GetVaultKeeps(vaultId);
             return vaultKeeps;
         }
 

@@ -11,3 +11,8 @@ namespace Keepr.Models
         public string CreatorId { get; set; }
     }
 }
+
+public class KeptKeep : Keep
+{
+    public int VaultKeepId { get; set; }
+}

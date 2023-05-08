@@ -3,12 +3,10 @@ namespace Keepr.Services
     public class VaultsService
     {
         private readonly VaultsRepository _repo;
-        private readonly VaultKeepsService _vaultKeepsService;
 
-        public VaultsService(VaultsRepository repo, VaultKeepsService vaultKeepsService)
+        public VaultsService(VaultsRepository repo)
         {
             _repo = repo;
-            _vaultKeepsService = vaultKeepsService;
         }
 
         internal Vault CreateVault(Vault vaultData)
@@ -65,10 +63,10 @@ namespace Keepr.Services
             return $"{vault.Name} has been deleted.";
         }
 
-        internal List<VaultKeep> GetVaultKeeps(int vaultId, string accountId)
-        {
-            List<VaultKeep> vaultKeeps = _vaultKeepsService.GetVaultKeeps(vaultId, accountId);
-            return vaultKeeps;
-        }
+        // internal List<VaultKeep> GetVaultKeeps(int vaultId, string accountId)
+        // {
+        //     List<VaultKeep> vaultKeeps = _vaultKeepsService.GetVaultKeeps(vaultId, accountId);
+        //     return vaultKeeps;
+        // }
     }
 }
