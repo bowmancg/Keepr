@@ -52,9 +52,13 @@ namespace Keepr.Services
             return originalKeep;
         }
 
-        internal string Remove(int keepId)
+        internal string Remove(int keepId, string userId)
         {
             Keep keep = this.GetOne(keepId);
+            if (keep.CreatorId != userId)
+            {
+                throw new Exception("You cannot delete this.");
+            }
             int rowsAffected = _repo.Remove(keepId);
             if (rowsAffected == 0)
             {

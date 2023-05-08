@@ -32,11 +32,12 @@ namespace Keepr.Controllers
 
         [HttpDelete("{vaultKeepId}")]
         [Authorize]
-        public ActionResult<string> Remove(int vaultKeepId)
+        public async Task<ActionResult<string>> Remove(int vaultKeepId)
         {
             try
             {
-                string message = _vaultKeepsService.Remove(vaultKeepId);
+                Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+                string message = _vaultKeepsService.Remove(vaultKeepId, userInfo?.Id);
                 return Ok(message);
             }
             catch (Exception e)

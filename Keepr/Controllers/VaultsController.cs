@@ -47,12 +47,13 @@ namespace Keepr.Controllers
 
         [HttpPut("{vaultId}")]
         [Authorize]
-        public ActionResult<Vault> EditVault([FromBody] Vault vaultData, int vaultId)
+        public async Task<ActionResult<Vault>> EditVault([FromBody] Vault vaultData, int vaultId)
         {
             try
             {
+                Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
                 vaultData.Id = vaultId;
-                Vault vault = _vaultsService.EditVault(vaultData, vaultId);
+                Vault vault = _vaultsService.EditVault(vaultData, vaultId, userInfo?.Id);
                 return Ok(vault);
             }
             catch (Exception e)
@@ -63,11 +64,12 @@ namespace Keepr.Controllers
 
         [HttpDelete("{vaultId}")]
         [Authorize]
-        public ActionResult<string> Remove(int vaultId)
+        public async Task<ActionResult<string>> Remove(int vaultId)
         {
             try
             {
-                string message = _vaultsService.Remove(vaultId);
+                Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+                string message = _vaultsService.Remove(vaultId, userInfo?.Id);
                 return Ok(message);
             }
             catch (Exception e)

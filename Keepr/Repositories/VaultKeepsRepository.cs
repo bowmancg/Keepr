@@ -47,6 +47,24 @@ namespace Keepr.Repositories
             return vaultKeeps;
         }
 
+        public VaultKeep GetOne(int id)
+        {
+            string sql = @"
+            SELECT
+            vk.*,
+            a.*
+            FROM vaultKeeps vk
+            JOIN accounts a ON a.id = vk.creatorId
+            WHERE vk.id = @id
+            ";
+            VaultKeep vaultKeep = _db.Query<VaultKeep, Account, VaultKeep>(sql, (vk, a) =>
+            {
+                vk.Creator = a;
+                return vk;
+            }, new { id }).FirstOrDefault();
+            return vaultKeep;
+        }
+
         internal int Remove(int vaultKeepId)
         {
             string sql = "DELETE FROM vaultKeeps WHERE id = @vaultKeepId LIMIT 1;";

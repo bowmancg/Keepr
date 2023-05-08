@@ -52,7 +52,8 @@ VALUES (
 SELECT
 k.*, a.*
 FROM keeps k
-JOIN accounts a ON a.id = k.creatorId;
+JOIN accounts a ON a.id = k.creatorId
+WHERE k.id = 81;
 
 CREATE TABLE
 vaults(

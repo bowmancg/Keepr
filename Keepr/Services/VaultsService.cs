@@ -31,9 +31,13 @@ namespace Keepr.Services
             return vault;
         }
 
-        internal Vault EditVault(Vault vaultData, int vaultId)
+        internal Vault EditVault(Vault vaultData, int vaultId, string userId)
         {
             Vault originalVault = _repo.GetOne(vaultId);
+            if (originalVault.CreatorId != userId)
+            {
+                throw new Exception("You cannot edit this.");
+            }
             originalVault.Name = vaultData.Name ?? originalVault.Name;
             originalVault.Description = vaultData.Description ?? originalVault.Description;
             originalVault.Img = vaultData.Img ?? originalVault.Img;
@@ -42,9 +46,13 @@ namespace Keepr.Services
             return originalVault;
         }
 
-        internal string Remove(int vaultId)
+        internal string Remove(int vaultId, string userId)
         {
             Vault vault = _repo.GetOne(vaultId);
+            if (vault.CreatorId != userId)
+            {
+                throw new Exception("You cannot delete this.");
+            }
             int rowsAffected = _repo.Remove(vaultId);
             if (rowsAffected == 0)
             {

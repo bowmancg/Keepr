@@ -85,11 +85,12 @@ namespace Keepr.Controllers
 
         [HttpDelete("{keepId}")]
         [Authorize]
-        public ActionResult<string> Remove(int keepId)
+        public async Task<ActionResult<string>> Remove(int keepId)
         {
             try
             {
-                string message = _keepsService.Remove(keepId);
+                Account userInfo = await _auth.GetUserInfoAsync<Account>(HttpContext);
+                string message = _keepsService.Remove(keepId, userInfo?.Id);
                 return Ok(message);
             }
             catch (Exception e)
