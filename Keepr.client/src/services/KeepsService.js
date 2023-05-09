@@ -12,7 +12,11 @@ class KeepsService {
         AppState.keeps = res.data.map(k => new Keep(k))
     }
 
-    
+    async getKeepById(keepId) {
+        const res = await api.get(`api/keeps/${keepId}`)
+        logger.log('[Found Keep]', res.data)
+        AppState.activeKeep = new Keep(res.data)
+    }
 }
 
 export const keepsService = new KeepsService()

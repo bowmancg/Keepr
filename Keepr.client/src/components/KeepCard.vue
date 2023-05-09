@@ -1,5 +1,5 @@
 <template>
-    <div class="elevation-3">
+    <div class="elevation-3 mt-4 mb-4">
         <div>
             <img :src="keep?.img" :alt="keep.name" class="img-fluid">
         </div>
