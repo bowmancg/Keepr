@@ -1,8 +1,8 @@
 <template>
-  <div class="about text-center">
-    <h1>Welcome {{ account.name }}</h1>
-    <img class="rounded" :src="account.picture" alt="" />
-    <p>{{ account.email }}</p>
+  <div class="text-center container-fluid">
+    <h1>Welcome</h1>
+    <img class="rounded" :src="account.picture" :alt="account.name" />
+    <p>{{ account.name }}</p>
   </div>
 </template>
 
@@ -12,7 +12,8 @@ import { AppState } from '../AppState'
 export default {
   setup() {
     return {
-      account: computed(() => AppState.account)
+      account: computed(() => AppState.account),
+      vaults: computed(() => AppState.vaults)
     }
   }
 }

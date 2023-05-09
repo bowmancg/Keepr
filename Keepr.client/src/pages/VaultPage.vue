@@ -1,7 +1,7 @@
 <template>
     <section class="row justify-content-center m-5">
         <div class="col-md-10 p-1 rounded">
-            {{ vault?.img }}
+            <img :src="vault.img" :alt="vault.name">
         </div>
     </section>
 </template>

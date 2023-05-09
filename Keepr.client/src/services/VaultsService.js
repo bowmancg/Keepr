@@ -19,6 +19,11 @@ class VaultsService {
         AppState.vaults.push(newVault)
         return newVault
     }
+
+    async getMyVaults(creatorId) {
+        const res = await api.get('account/vaults')
+        AppState.vault = res.data.map(v => new Vault(v))
+    }
 }
 
 export const vaultsService = new VaultsService()
