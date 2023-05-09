@@ -4,8 +4,8 @@
       <KeepCard :keep="k" />
     </div>
   </section>
-
   <KeepDetailsModal />
+  
 </template>
 
 <script>
