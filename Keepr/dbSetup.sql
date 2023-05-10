@@ -1,4 +1,4 @@
--- Active: 1682476661572@@SG-codeworks-7498-mysql-master.servers.mongodirector.com@3306@sandbox
+-- Active: 1682460182546@@SG-codeworks-7498-mysql-master.servers.mongodirector.com@3306@sandbox
 CREATE TABLE IF NOT EXISTS accounts(
   id VARCHAR(255) NOT NULL primary key COMMENT 'primary key',
   createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',
@@ -8,6 +8,8 @@ CREATE TABLE IF NOT EXISTS accounts(
   coverImg VARCHAR(255) COMMENT 'User cover image',
   picture varchar(255) COMMENT 'User Picture'
 ) default charset utf8 COMMENT '';
+
+ALTER TABLE accounts ADD coverImg VARCHAR(255);
 
 SELECT
     v.*,

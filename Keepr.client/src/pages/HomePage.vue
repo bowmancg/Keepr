@@ -1,11 +1,12 @@
 <template>
-  <section class="justify-content-center p-3 masonry-with-flex">
-    <div data-bs-toggle="modal" data-bs-target="#keepModal" @click="selectKeep(k)"  v-for="k in keeps" :key="k.id">
+  <div class="mt-3 p-3 masonry-with-flex justify-content-center">
+
+    <div class="col-md-3" data-bs-toggle="modal" data-bs-target="#keepModal" @click="selectKeep(k)" v-for="k in keeps"
+      :key="k.id">
       <KeepCard :keep="k" />
     </div>
-  </section>
+  </div>
   <KeepDetailsModal />
-  
 </template>
 
 <script>
@@ -56,8 +57,8 @@ body {
   max-height: 1000px;
 
   div {
-    width: 150px;
-    background: #EC985A;
+    width: 40vh;
+    background: #7ce548;
     color: white;
     margin: 0 1rem 1rem 0;
     text-align: center;
@@ -66,12 +67,12 @@ body {
     font-size: 2rem;
   }
 
-  @for $i from 1 through 36 {
-    div:nth-child(#{$i}) {
-      $h: (random(400) + 100)+px;
-      height: $h;
-      line-height: $h;
-    }
-  }
+  // @for $i from 1 through 36 {
+  //   div:nth-child(#{$i}) {
+  //     $h: (random(400) + 100)+px;
+  //     height: $h;
+  //     line-height: $h;
+  //   }
+  // }
 }
 </style>

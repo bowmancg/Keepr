@@ -35,7 +35,6 @@ export default {
     // },
     setup(){
         const editable = ref({})
-
         
         const route = useRoute()
         const router = useRouter()

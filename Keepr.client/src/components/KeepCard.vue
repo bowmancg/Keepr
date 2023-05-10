@@ -1,7 +1,7 @@
 <template>
-    <div class="elevation-3 mt-4 mb-4">
+    <div class="mt-3">
         <div>
-            <img :src="keep?.img" :alt="keep.name" class="img-fluid">
+            <img :src="keep?.img" :alt="keep.name" class="img-fluid p-3 rounded">
         </div>
     </div>
 </template>

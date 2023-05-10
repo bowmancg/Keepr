@@ -29,14 +29,14 @@ import { AppState } from '../AppState';
 import { computed, reactive, onMounted, ref, watchEffect } from 'vue';
 import { keepsService } from '../services/KeepsService';
 export default {
-    setup(){
+    setup() {
         const editable = ref({})
         watchEffect(() => {
             editable.value = { ...AppState.activeKeep }
         })
-    return {
-        editable,
-        async editKeep() {
+        return {
+            editable,
+            async editKeep() {
                 try {
                     const keepData = editable.value
                     await keepsService.editKeep(keepData)
@@ -44,12 +44,10 @@ export default {
                     Pop.error(error)
                 }
             }
-    }
+        }
     }
 };
 </script>
 
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
