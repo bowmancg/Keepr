@@ -12,9 +12,9 @@
   </div>
   <section class="row justify-content-start">
     <div class="col-12">
-      <div class="row justify-content-start">
+      <div class="row masonry-with-flex justify-content-center">
         <div v-for="v in vaults" :key="v.id" class="col-md-3 my-3 mx-4 py-2">
-          <VaultCard :vault="v.vault" />
+          <VaultCard :vault="v" />
         </div>
       </div>
     </div>
@@ -39,40 +39,37 @@ import Modal from '../components/Modal.vue';
 import EditAccountForm from '../components/EditAccountForm.vue';
 import VaultCard from '../components/VaultCard.vue';
 import Pop from '../utils/Pop';
-import { vaultKeepsService } from '../services/VaultKeepsService';
 import { useRoute } from 'vue-router';
 import { vaultsService } from '../services/VaultsService';
 export default {
-    setup() {
-      const route = useRoute()
-      // async function getVaultById() {
-      //   try {
-      //     const vaultId = route.params.vaultId
-      //     await vaultsService.getVaultById(vaultId)
-      //   } catch (error) {
-      //     Pop.error(error)
-      //   }
-      // }
-      
+  setup() {
+    const route = useRoute()
+    async function getProfileVaults() {
+      try {
+        await vaultsService.getProfileVaults()
+      } catch (error) {
+        Pop.error(error)
+      }
+    }
 
-            watchEffect(() => {
-              // getVaultById()
-              route.params.vaultId
-            })
-        return {
-            account: computed(() => AppState.account),
-            vaults: computed(() => AppState.vaults),
-            
-        };
-    },
-    components: { Modal, EditAccountForm, VaultCard }
+
+    watchEffect(() => {
+      getProfileVaults()
+    })
+    return {
+      account: computed(() => AppState.account),
+      vaults: computed(() => AppState.myVaults),
+
+    };
+  },
+  components: { Modal, EditAccountForm, VaultCard }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .img-profile {
   max-width: 100px;
-  
+
 }
 
 .hero-img {
@@ -83,5 +80,28 @@ export default {
   border-bottom: black;
   border-width: 2px;
   width: 50%;
+}
+
+body {
+  margin: 0;
+  padding: 1rem;
+}
+
+.masonry-with-flex {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  max-height: 1000px;
+
+  div {
+    width: 40vh;
+    background: #7ce548;
+    color: white;
+    margin: 0 1rem 1rem 0;
+    text-align: center;
+    font-family: system-ui;
+    font-weight: 900;
+    font-size: 2rem;
+  }
 }
 </style>

@@ -6,9 +6,17 @@ import { api } from "./AxiosService"
 
 class VaultKeepsService {
 
-    async createVaultKeep(vaultKeepData) {
-        const res = await api.post('api/vaultkeeps', vaultKeepData)
+    async createVaultKeep(keepId, vaultId) {
+        const res = await api.post('api/vaultkeeps', {keepId, vaultId})
         logger.log('[Created VaultKeep]', res.data)
+        const keeps = AppState.keeps
+
+        keeps.forEach(k => {
+            if (k.id === keepId) {
+                k.kept++
+            }
+        })
+        AppState.keeps = keeps
         const newVaultKeep = new VaultKeep(res.data)
         AppState.vaultKeeps.push(newVaultKeep)
         return newVaultKeep

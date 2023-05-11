@@ -19,8 +19,11 @@
                             <button data-bs-toggle="modal" data-bs-target="#editKeepForm"
                                 v-if="keep?.creatorId == account?.id" class="btn btn-success">Edit Keep</button>
                             <button @click="deleteKeep(keep.id)" v-if="keep?.creatorId == account?.id" class="btn btn-danger">Delete Keep</button>
+                            <VaultDropdown v-if="account?.id" :keep="keep"/>
                         </div>
                     </div>
+                    <p>Views: {{ keep.views }}</p>
+                    <p>Number Kept: {{ keep.kept }}</p>
                 </div>
             </div>
         </div>
@@ -44,6 +47,8 @@ import { keepsService } from '../services/KeepsService';
 import { useRoute } from 'vue-router';
 import Modal from './Modal.vue';
 import EditKeepForm from './EditKeepForm.vue';
+import { vaultKeepsService } from '../services/VaultKeepsService';
+import VaultDropdown from './VaultDropdown.vue';
 export default {
     setup() {
         const editable = ref({});
@@ -72,10 +77,18 @@ export default {
                 } catch (error) {
                     Pop.error(error)
                 }
+            },
+            async createVaultKeep(keepId) {
+                try {
+                    
+                    await vaultKeepsService.createVaultKeep(keepId)
+                } catch (error) {
+                    Pop.error(error)
+                }
             }
         };
     },
-    components: { Modal, EditKeepForm }
+    components: { Modal, EditKeepForm, VaultDropdown }
 };
 </script>
 

@@ -1,6 +1,6 @@
 <template>
     <div class="elevation-3 mt-3">
-        <img :src="vaultKeep.img" :alt="vaultKeep.name">
+        <img class="img-fluid" :src="vaultKeep.img" :alt="vaultKeep.name">
 
     </div>
 </template>
@@ -11,17 +11,17 @@ import { AppState } from '../AppState';
 import { computed, reactive, onMounted } from 'vue';
 import { VaultKeep } from '../models/VaultKeep';
 export default {
-    props: { type: VaultKeep, required: true },
-    setup(props){
-        
-    return {
-        vaultKeeps: computed(() => AppState.vaultKeeps)
-    }
+    props: {
+        vaultKeep: { type: VaultKeep, required: true }
+    },
+    setup(props) {
+
+        return {
+            
+        }
     }
 };
 </script>
 
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

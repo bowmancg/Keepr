@@ -1,4 +1,4 @@
--- Active: 1682460182546@@SG-codeworks-7498-mysql-master.servers.mongodirector.com@3306@sandbox
+-- Active: 1682476661572@@SG-codeworks-7498-mysql-master.servers.mongodirector.com@3306@sandbox
 CREATE TABLE IF NOT EXISTS accounts(
   id VARCHAR(255) NOT NULL primary key COMMENT 'primary key',
   createdAt DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',
@@ -47,7 +47,7 @@ VALUES (
   'One of the images I will keep in a collection.',
   'https://www.thespruceeats.com/thmb/P9OEyJww2o6b8_GMjQALTU6VY78=/450x300/filters:no_upscale():max_bytes(150000):strip_icc()/pasta-carbonara-recipe-5210168-hero-01-80090e56abc04ca19d88ebf7fad1d157.jpg',
   0,
-  0,
+  1,
   '64502070214f5e78470d10c8'
 );
 
@@ -55,7 +55,7 @@ SELECT
 k.*, a.*
 FROM keeps k
 JOIN accounts a ON a.id = k.creatorId
-WHERE k.id = 81;
+WHERE k.creatorId = '64502070214f5e78470d10c8';
 
 CREATE TABLE
 vaults(

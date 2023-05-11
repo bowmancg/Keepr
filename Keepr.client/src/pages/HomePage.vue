@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-3 p-3 masonry-with-flex justify-content-center">
+  <div class="mt-3 p-3 masonry-with-flex">
 
     <div class="col-md-3" data-bs-toggle="modal" data-bs-target="#keepModal" @click="selectKeep(k)" v-for="k in keeps"
       :key="k.id">
@@ -55,9 +55,11 @@ body {
   flex-direction: column;
   flex-wrap: wrap;
   max-height: 1000px;
+  
 
   div {
     width: 40vh;
+    
     background: #7ce548;
     color: white;
     margin: 0 1rem 1rem 0;
@@ -67,12 +69,6 @@ body {
     font-size: 2rem;
   }
 
-  // @for $i from 1 through 36 {
-  //   div:nth-child(#{$i}) {
-  //     $h: (random(400) + 100)+px;
-  //     height: $h;
-  //     line-height: $h;
-  //   }
-  // }
+  
 }
 </style>

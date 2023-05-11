@@ -104,5 +104,21 @@ namespace Keepr.Repositories
             int rowsAffected = _db.Execute(sql, new { keepId });
             return rowsAffected;
         }
+
+        internal Keep Update(Keep keep)
+        {
+            string sql = @"
+            UPDATE keeps
+            SET
+            name = @Name,
+            description = @Description,
+            img = @Img,
+            views = @Views,
+            kept = @Kept
+            WHERE id = @Id;
+            ";
+            _db.Execute(sql, keep);
+            return keep;
+        }
     }
 }

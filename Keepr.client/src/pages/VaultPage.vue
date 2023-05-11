@@ -8,14 +8,18 @@
         <div class="col-md-8 text-center">
             <p class="fs-4">{{ vault?.description }}</p>
         </div>
+        <p class="fs-3 text-center">{{ vaultKeeps.length }} Keeps</p>
     </section>
     <section class="row">
-        <div data-bs-toggle="modal" data-bs-target="#vaultKeepModal" @click="selectVaultKeep(v)" v-for="v in vaultKeeps"
+        <div v-if="vaultKeeps && vaultKeeps.length > 0">
+
+            <div data-bs-toggle="modal" data-bs-target="#vaultKeepModal" @click="selectVaultKeep(v)" v-for="v in vaultKeeps"
             :key="v.id" class="col-md-3">
             <VaultKeepCard :vaultKeep="v" />
         </div>
+    </div>
     </section>
-    <VaultKeepModal />
+    <KeepDetailsModal />
 </template>
 
 
@@ -28,6 +32,7 @@ import { vaultsService } from '../services/VaultsService';
 import VaultKeepCard from '../components/VaultKeepCard.vue';
 import VaultKeepModal from '../components/VaultKeepModal.vue';
 import { vaultKeepsService } from '../services/VaultKeepsService';
+import KeepDetailsModal from '../components/KeepDetailsModal.vue';
 export default {
     setup() {
         const route = useRoute();
@@ -54,12 +59,13 @@ export default {
         });
         return {
             vault: computed(() => AppState.activeVault),
+            vaultKeeps: computed(() => AppState.vaultKeeps),
             selectVaultKeep(vaultKeep) {
                 AppState.activeVaultKeep = vaultKeep
             }
         };
     },
-    components: { VaultKeepCard, VaultKeepModal }
+    components: { VaultKeepCard, VaultKeepModal, KeepDetailsModal }
 };
 </script>
 

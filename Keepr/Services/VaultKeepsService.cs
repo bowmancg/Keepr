@@ -34,6 +34,8 @@ namespace Keepr.Services
                 throw new Exception("Unauthorized.");
             }
             VaultKeep vaultKeep = _repo.Insert(vaultKeepData);
+            keep.Kept++;
+            _keepRepo.Update(keep);
             // if (vaultKeepData.KeepId == 0)
             // {
             //     throw new Exception("You cannot create this.");

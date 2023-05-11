@@ -1,8 +1,8 @@
 <template>
     <router-link :to="{ name: 'Vault', params: { vaultId: vault.id } }">
-        <div class="elevation-3 mt-4 mb-4">
-            <img :src="vault?.img" :alt="vault.name" class="img-fluid">
-            {{ vault?.name }}
+        <div class="text-center p-3 mt-4 mb-4">
+            <img :src="vault?.img" :alt="vault.name" class="img-fluid rounded">
+            <p>{{ vault?.name }}</p>
         </div>
     </router-link>
 </template>
