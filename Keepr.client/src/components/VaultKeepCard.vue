@@ -1,8 +1,8 @@
 <template>
-    <div class="elevation-3 mt-3">
-        <img class="img-fluid" :src="vaultKeep.img" :alt="vaultKeep.name">
-
-    </div>
+        <div class="elevation-3 mt-3 mb-3 text-center">
+            <img class="img-fluid p-3 rounded" :src="vaultKeep.img" :alt="vaultKeep.name">
+            <p>{{ vault?.name }}</p>
+        </div>
 </template>
 
 
@@ -17,7 +17,7 @@ export default {
     setup(props) {
 
         return {
-            
+            vault: computed(() => AppState.vaults)
         }
     }
 };

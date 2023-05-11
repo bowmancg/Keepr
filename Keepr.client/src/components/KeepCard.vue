@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-3">
+    <div class="mt-3 mb-3 rounded">
         <div>
             <img :src="keep?.img" :alt="keep.name" class="img-fluid p-3 rounded">
         </div>

@@ -7,13 +7,14 @@
     <section class="row justify-content-start">
         <div class="col-md-8 text-center">
             <p class="fs-4">{{ vault?.description }}</p>
+            <button v-if="vault?.creatorId == account?.id" @click="" class="btn btn-danger">Delete Vault</button>
         </div>
         <p class="fs-3 text-center">{{ vaultKeeps.length }} Keeps</p>
     </section>
-    <section class="row">
+    <section class="row justify-content-center">
         <div v-if="vaultKeeps && vaultKeeps.length > 0">
 
-            <div data-bs-toggle="modal" data-bs-target="#vaultKeepModal" @click="selectVaultKeep(v)" v-for="v in vaultKeeps"
+            <div data-bs-toggle="modal" data-bs-target="#keepModal" @click="selectVaultKeep(v)" v-for="v in vaultKeeps"
             :key="v.id" class="col-md-3">
             <VaultKeepCard :vaultKeep="v" />
         </div>
@@ -30,7 +31,6 @@ import Pop from '../utils/Pop';
 import { useRoute } from 'vue-router';
 import { vaultsService } from '../services/VaultsService';
 import VaultKeepCard from '../components/VaultKeepCard.vue';
-import VaultKeepModal from '../components/VaultKeepModal.vue';
 import { vaultKeepsService } from '../services/VaultKeepsService';
 import KeepDetailsModal from '../components/KeepDetailsModal.vue';
 export default {
@@ -60,12 +60,14 @@ export default {
         return {
             vault: computed(() => AppState.activeVault),
             vaultKeeps: computed(() => AppState.vaultKeeps),
+            
+            keep: computed(() => AppState.activeKeep),
             selectVaultKeep(vaultKeep) {
-                AppState.activeVaultKeep = vaultKeep
+                AppState.activeKeep = vaultKeep
             }
         };
     },
-    components: { VaultKeepCard, VaultKeepModal, KeepDetailsModal }
+    components: { VaultKeepCard, KeepDetailsModal }
 };
 </script>
 
