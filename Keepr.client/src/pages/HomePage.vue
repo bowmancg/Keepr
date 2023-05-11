@@ -38,8 +38,8 @@ export default {
       keeps: computed(() => AppState.keeps),
       async selectKeep(keep) {
         //TODO - GET KEEP BY ID
-        const keepId = route.params.keepId
-        keepsService.getKeepById(keepId)
+        const keepId = keep.id
+        await keepsService.getKeepById(keepId)
         AppState.activeKeep = keep
         keep.views++
       }
