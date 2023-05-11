@@ -59,7 +59,7 @@ export default {
     return {
       account: computed(() => AppState.account),
       vaults: computed(() => AppState.myVaults),
-
+      keeps: computed(() => AppState.keeps)
     };
   },
   components: { Modal, EditAccountForm, VaultCard }

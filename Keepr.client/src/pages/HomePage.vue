@@ -1,7 +1,7 @@
 <template>
-  <div class="mt-3 p-3 masonry-with-flex">
+  <div class="mt-3 p-3 masonry">
 
-    <div class="col-md-3" data-bs-toggle="modal" data-bs-target="#keepModal" @click="selectKeep(k)" v-for="k in keeps"
+    <div class="card mb-3" data-bs-toggle="modal" data-bs-target="#keepModal" @click="selectKeep(k)" v-for="k in keeps"
       :key="k.id">
       <KeepCard :keep="k" />
     </div>
@@ -17,6 +17,7 @@ import { keepsService } from '../services/KeepsService';
 import Pop from '../utils/Pop';
 import { AppState } from '../AppState';
 import KeepDetailsModal from '../components/KeepDetailsModal.vue';
+import { useRoute } from 'vue-router';
 
 export default {
 
@@ -28,15 +29,19 @@ export default {
         Pop.error(error)
       }
     }
-
+    
+    const route = useRoute()
     onMounted(() => {
       getKeeps()
     })
     return {
       keeps: computed(() => AppState.keeps),
-      keep: computed(() => AppState.activeKeep),
-      selectKeep(keep) {
+      async selectKeep(keep) {
+        //TODO - GET KEEP BY ID
+        const keepId = route.params.keepId
+        keepsService.getKeepById(keepId)
         AppState.activeKeep = keep
+        keep.views++
       }
     };
   },
@@ -50,25 +55,12 @@ body {
   padding: 1rem;
 }
 
-.masonry-with-flex {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  max-height: 1000px;
+.masonry {
+  columns: 300px;
   
 
   div {
     width: 40vh;
-    
-    background: #7ce548;
-    color: white;
-    margin: 0 1rem 1rem 0;
-    text-align: center;
-    font-family: system-ui;
-    font-weight: 900;
-    font-size: 2rem;
   }
-
-  
 }
 </style>

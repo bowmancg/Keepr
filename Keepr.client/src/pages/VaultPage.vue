@@ -7,15 +7,14 @@
     <section class="row justify-content-start">
         <div class="col-md-8 text-center">
             <p class="fs-4">{{ vault?.description }}</p>
-            <button v-if="vault?.creatorId == account?.id" @click="" class="btn btn-danger">Delete Vault</button>
+            
         </div>
         <p class="fs-3 text-center">{{ vaultKeeps.length }} Keeps</p>
     </section>
     <section class="row justify-content-center">
         <div v-if="vaultKeeps && vaultKeeps.length > 0">
-
             <div data-bs-toggle="modal" data-bs-target="#keepModal" @click="selectVaultKeep(v)" v-for="v in vaultKeeps"
-            :key="v.id" class="col-md-3">
+            :key="v.id" class="masonry">
             <VaultKeepCard :vaultKeep="v" />
         </div>
     </div>
@@ -60,10 +59,11 @@ export default {
         return {
             vault: computed(() => AppState.activeVault),
             vaultKeeps: computed(() => AppState.vaultKeeps),
-            
             keep: computed(() => AppState.activeKeep),
-            selectVaultKeep(vaultKeep) {
-                AppState.activeKeep = vaultKeep
+            
+            selectVaultKeep(keep) {
+                AppState.activeKeep = keep
+                keep.views++
             }
         };
     },
@@ -76,5 +76,18 @@ export default {
 .vault-img {
     height: 40vh;
     width: 50%;
+}
+
+body {
+    margin: 0;
+    padding: 1rem;
+}
+
+.masonry {
+    columns: 300px;
+
+    div {
+        width: 40vh;
+    }
 }
 </style>

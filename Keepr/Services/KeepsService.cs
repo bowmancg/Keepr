@@ -34,6 +34,8 @@ namespace Keepr.Services
             {
                 throw new Exception($"Bad Id: {keepId}");
             }
+            keep.Views++;
+            _repo.Update(keep);
             return keep;
         }
 
@@ -47,6 +49,7 @@ namespace Keepr.Services
             originalKeep.Name = keepData.Name ?? originalKeep.Name;
             originalKeep.Description = keepData.Description ?? originalKeep.Description;
             originalKeep.Img = keepData.Img ?? originalKeep.Img;
+            originalKeep.Views = keepData.Views++;
             _repo.EditKeep(originalKeep);
             originalKeep.UpdatedAt = DateTime.Now;
             return originalKeep;

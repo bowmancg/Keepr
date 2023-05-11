@@ -18,7 +18,7 @@
                             <p class="p-2">{{ keep.description }}</p>
                             <button data-bs-toggle="modal" data-bs-target="#editKeepForm"
                                 v-if="keep?.creatorId == account?.id" class="btn btn-success">Edit Keep</button>
-                            <button @click="" v-if="keep?.creatorId == account?.id" class="btn btn-danger">Delete Keep</button>
+                            
                         </div>
                     </div>
                 </div>
@@ -32,10 +32,13 @@
 <script>
 import { AppState } from '../AppState';
 import { computed, reactive, onMounted } from 'vue';
+import Pop from '../utils/Pop';
+import { vaultKeepsService } from '../services/VaultKeepsService';
 export default {
     setup(){
     return {
-        keep: computed(() => AppState.activeVaultKeep)
+        keep: computed(() => AppState.activeVaultKeep),
+        
     }
     }
 };

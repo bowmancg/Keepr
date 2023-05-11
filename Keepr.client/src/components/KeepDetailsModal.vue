@@ -18,12 +18,18 @@
                             <p class="p-2">{{ keep.description }}</p>
                             <button data-bs-toggle="modal" data-bs-target="#editKeepForm"
                                 v-if="keep?.creatorId == account?.id" class="btn btn-success">Edit Keep</button>
-                            <button @click="deleteKeep(keep.id)" v-if="keep?.creatorId == account?.id" class="btn btn-danger">Delete Keep</button>
-                            <VaultDropdown v-if="account?.id" :keep="keep"/>
+                            <button @click="deleteKeep(keep.id)" v-if="keep?.creatorId == account?.id"
+                                class="btn btn-danger mb-3 mt-3">Delete Keep</button>
+                            <VaultDropdown v-if="account?.id" :keep="keep" />
                         </div>
                     </div>
-                    <p>Views: {{ keep.views }}</p>
-                    <p>Number Kept: {{ keep.kept }}</p>
+                    <button @click="deleteVaultKeep(vaultKeepId)" v-if="keep?.creatorId == account?.id"
+                        class="btn btn-danger mb-3 mt-3">Delete Keep</button>
+                    <p>Views: {{ keep?.views }}</p>
+                    <p>Number Kept: {{ keep?.kept }}</p>
+                </div>
+                    <img @click="goToProfile(account.id)" :src="keep.creator?.picture" alt="" class="img-fluid m-3 profile-picture">
+                <div>
                 </div>
             </div>
         </div>
@@ -44,30 +50,26 @@ import { AppState } from '../AppState';
 import { computed, reactive, onMounted, ref } from 'vue';
 import Pop from '../utils/Pop';
 import { keepsService } from '../services/KeepsService';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import Modal from './Modal.vue';
 import EditKeepForm from './EditKeepForm.vue';
 import { vaultKeepsService } from '../services/VaultKeepsService';
 import VaultDropdown from './VaultDropdown.vue';
+import { Profile } from '../models/Account';
 export default {
+    
     setup() {
         const editable = ref({});
         const route = useRoute();
-        // async function getKeepById() {
-        //     try {
-        //         let keepId = route.params.keepId;
-        //         await keepsService.getKeepById(keepId);
-        //     }
-        //     catch (error) {
-        //         Pop.error(error);
-        //     }
-        // }
+        const router = useRouter()
+      
         onMounted(() => {
-            // getKeepById()
+
         });
         return {
             keep: computed(() => AppState.activeKeep),
             account: computed(() => AppState.account),
+            profile: computed(() => AppState.profiles),
             editable,
             async deleteKeep(keepId) {
                 try {
@@ -80,8 +82,20 @@ export default {
             },
             async createVaultKeep(keepId) {
                 try {
-                    
+
                     await vaultKeepsService.createVaultKeep(keepId)
+                } catch (error) {
+                    Pop.error(error)
+                }
+            },
+            async goToProfile(profileId) {
+                router.push({ name: 'Profile', params: { profileId: profileId } })
+            },
+            async deleteVaultKeep(vaultKeepId) {
+                try {
+                    if (await Pop.confirm('Are you sure you want to delete this?')) {
+                        await vaultKeepsService.deleteVaultKeep(vaultKeepId)
+                    }
                 } catch (error) {
                     Pop.error(error)
                 }
@@ -93,4 +107,11 @@ export default {
 </script>
 
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.profile-picture {
+    height: 10vh;
+    width: 10vh;
+    border-radius: 50%;
+    box-shadow: 0 0 10px black;
+}
+</style>
