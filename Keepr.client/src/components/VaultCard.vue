@@ -1,5 +1,5 @@
 <template>
-    <button @click="deleteVault(vault.id)" class="btn btn-danger">Delete Vault</button>
+    <button v-if="vaults?.creatorId == account.id" @click="deleteVault(vault.id)" class="btn btn-danger">Delete Vault</button>
     <router-link :to="{ name: 'Vault', params: { vaultId: vault.id } }">
         <div class="text-center rounded p-3 mt-4 mb-4">
             <img :src="vault?.img" :alt="vault.name" class="img-fluid rounded">
@@ -22,6 +22,7 @@ export default {
     setup(props) {
         return {
             vaults: computed(() => AppState.vaults),
+            account: computed(() => AppState.account),
             async deleteVault(vaultId) {
                 try {
                     if (await Pop.confirm('Are you sure you want to delete this?')) {

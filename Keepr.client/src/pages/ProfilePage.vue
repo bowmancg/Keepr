@@ -2,7 +2,7 @@
     <div class="text-center container-fluid">
         <div class="row">
             <div class="col-12 pt-2">
-                <img :src="account?.coverImg" alt="" class="hero-img mx-1 img-fluid elevation-3">
+                <img :src="profile?.coverImg" alt="" class="hero-img mx-1 img-fluid elevation-3">
             </div>
             <h1>Hello I am {{ account.name }}</h1>
             <img :src="account.picture" alt="" class="rounded img-profile">
@@ -43,6 +43,7 @@ export default {
         return {
             account: computed(() => AppState.account),
             vaults: computed(() => AppState.vaults),
+            profile: computed(() => AppState.profiles),
             keeps: computed(() => AppState.keeps),
 
         };
