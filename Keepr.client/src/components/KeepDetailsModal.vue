@@ -23,7 +23,7 @@
                             <VaultDropdown v-if="account?.id && keep" :keep="keep" />
                         </div>
                     </div>
-                    <button v-if="vaultKeep?.creatorId == account?.id" @click="deleteVaultKeep(vaultKeep.vaultKeepId)" 
+                    <button v-if="vaultKeep?.creatorId == account?.id" @click="deleteVaultKeep(vaultKeep.id)" 
                         class="btn btn-danger mb-3 mt-3">Remove Keep</button>
                     <p>Views: {{ keep?.views }}</p>
                     <p>Number Kept: {{ keep?.kept }}</p>
