@@ -34,22 +34,7 @@
     </div>
     <Login />
   </nav>
-  <Modal id="createKeepForm">
-    <template #header>
-      <h5>Create Keep</h5>
-    </template>
-    <template #modalBody>
-      <CreateKeepForm />
-    </template>
-  </Modal>
-  <Modal id="createVaultForm">
-    <template #header>
-      <h5>Create Vault</h5>
-    </template>
-    <template #modalBody>
-      <CreateVaultForm />
-    </template>
-  </Modal>
+  
 </template>
 
 <script>
