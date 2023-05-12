@@ -50,7 +50,7 @@ namespace Keepr.Services
         internal List<KeptKeep> GetVaultKeeps(int vaultId, string userId)
         {
             Vault vault = _vaultsService.GetOne(vaultId, userId);
-            
+
             // if (vault.IsPrivate == true && vault.CreatorId != accountId)
             // {
             //     throw new Exception($"{vault.Name} is private.");
@@ -62,20 +62,21 @@ namespace Keepr.Services
         internal string Remove(int vaultKeepId, string userId)
         {
             VaultKeep vaultKeep = _repo.GetOne(vaultKeepId);
-            if (vaultKeep.CreatorId != userId)
+            if (vaultKeep != null)
             {
-                throw new Exception("You cannot delete this.");
-            }
-            int rowsAffected = _repo.Remove(vaultKeepId);
-            if (rowsAffected == 0)
-            {
-                throw new Exception("Delete Failed.");
-            }
-            if (rowsAffected > 1)
-            {
-                throw new Exception("Faulty Delete...");
+                if (vaultKeep.CreatorId != userId)
+                {
+                    throw new Exception("You cannot delete this.");
+                }
+                int rowsAffected = _repo.Remove(vaultKeepId);
             }
             return $"{vaultKeepId} has been deleted.";
+        }
+
+        internal VaultKeep GetOne(int vaultKeepId)
+        {
+            VaultKeep vaultKeep = _repo.GetOne(vaultKeepId);
+            return vaultKeep;
         }
     }
 }

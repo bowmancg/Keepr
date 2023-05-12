@@ -45,5 +45,19 @@ namespace Keepr.Controllers
                 return BadRequest(e.Message);
             }
         }
+
+        [HttpGet("{vaultKeepId}")]
+        public ActionResult<VaultKeep> GetOne(int vaultKeepId)
+        {
+            try
+            {
+                VaultKeep vaultKeep = _vaultKeepsService.GetOne(vaultKeepId);
+                return Ok(vaultKeep);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

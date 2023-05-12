@@ -60,7 +60,7 @@ body {
   
 
   div {
-    width: 40vh;
+    width: 25vh;
   }
 }
 </style>

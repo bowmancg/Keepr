@@ -13,6 +13,6 @@ export class Keep {
         this.creator = new Profile(data.creator)
         this.createdAt = new Date(data.createdAt)
         this.updatedAt = new Date(data.updatedAt)
-        this.vaultKeepId = this.vaultKeepId
+        this.vaultKeepId = data.vaultKeepId
     }
 }

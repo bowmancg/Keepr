@@ -12,9 +12,9 @@
         <p class="fs-3 text-center">{{ vaultKeeps.length }} Keeps</p>
     </section>
     <section class="row justify-content-center">
-        <div v-if="vaultKeeps && vaultKeeps.length > 0">
+        <div class="masonry" v-if="vaultKeeps && vaultKeeps.length > 0">
             <div data-bs-toggle="modal" data-bs-target="#keepModal" @click="selectVaultKeep(v)" v-for="v in vaultKeeps"
-            :key="v.id" class="masonry">
+            :key="v.id" class="">
             <VaultKeepCard :vaultKeep="v" />
         </div>
     </div>
@@ -61,9 +61,11 @@ export default {
             vaultKeeps: computed(() => AppState.vaultKeeps),
             keep: computed(() => AppState.activeKeep),
             
-            selectVaultKeep(keep) {
-                AppState.activeKeep = keep
-                keep.views++
+            async selectVaultKeep(vaultKeep) {
+                await vaultKeepsService.selectVaultKeep(vaultKeep.vaultKeepId)
+                // AppState.activeVaultKeep = vaultKeep
+                // AppState.activeKeep = AppState.keeps.find(k => k.id == vaultKeep.keepId)
+                // keep.views++
             }
         };
     },
@@ -87,7 +89,7 @@ body {
     columns: 300px;
 
     div {
-        width: 40vh;
+        width: 25vh;
     }
 }
 </style>

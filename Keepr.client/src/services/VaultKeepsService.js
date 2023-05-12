@@ -1,4 +1,5 @@
 import { AppState } from "../AppState"
+import { Keep } from "../models/Keep"
 import { VaultKeep } from "../models/VaultKeep"
 import { logger } from "../utils/Logger"
 import { api } from "./AxiosService"
@@ -30,9 +31,18 @@ class VaultKeepsService {
 
     async deleteVaultKeep(vaultKeepId) {
         const res = api.delete(`api/vaultkeeps/${vaultKeepId}`)
-        logger.log('[Deleted VaultKeep]')
-        const index = AppState.keep.findIndex(k => k.vaultKeepId == vaultKeepId)
+        logger.log('[Delete VaultKeep]', (await res).data)
+        const index = AppState.vaultKeeps.findIndex(k => k.vaultKeepId == vaultKeepId)
         AppState.keeps.splice(index, 1)
+        AppState.activeVaultKeep = null
+    }
+
+    async selectVaultKeep(vaultKeepId) {
+        const res = await api.get(`api/vaultkeeps/${vaultKeepId}`)
+        const vaultKeep = new VaultKeep(res.data)
+        logger.log('[Select Vaultkeep]', vaultKeep)
+        AppState.activeKeep = vaultKeep.keep
+        AppState.activeVaultKeep = vaultKeep
     }
 }
 

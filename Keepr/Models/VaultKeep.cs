@@ -8,4 +8,5 @@ namespace Keepr.Models;
         public Profile Creator { get; set; }
         public int VaultId { get; set; }
         public int KeepId { get; set; }
+        public Keep Keep { get; set; }
     }

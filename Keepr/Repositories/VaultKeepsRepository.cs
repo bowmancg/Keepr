@@ -49,13 +49,16 @@ namespace Keepr.Repositories
             string sql = @"
             SELECT
             vk.*,
+            k.*,
             a.*
             FROM vaultKeeps vk
             JOIN accounts a ON a.id = vk.creatorId
+            JOIN keeps k ON k.id = vk.keepId
             WHERE vk.id = @id
             ";
-            VaultKeep vaultKeep = _db.Query<VaultKeep, Account, VaultKeep>(sql, (vk, a) =>
+            VaultKeep vaultKeep = _db.Query<VaultKeep, Keep, Account, VaultKeep>(sql, (vk, k, a) =>
             {
+                vk.Keep = k;
                 vk.Creator = a;
                 return vk;
             }, new { id }).FirstOrDefault();

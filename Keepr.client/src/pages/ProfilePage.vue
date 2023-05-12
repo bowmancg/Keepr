@@ -4,11 +4,11 @@
             <div class="col-12 pt-2">
                 <img :src="profile?.coverImg" alt="" class="hero-img mx-1 img-fluid elevation-3">
             </div>
-            <h1>Hello I am {{ account.name }}</h1>
-            <img :src="account.picture" alt="" class="rounded img-profile">
+            <h1>Hello I am {{ profile?.name }}</h1>
+            <img :src="profile?.picture" alt="" class="rounded img-profile">
         </div>
-        <section class="row masonry justify-content-start">
-            <div class="col-12">
+        <section class="row  justify-content-start">
+            <div class="col-12 masonry">
                 <div v-for="v in vaults" :key="v.id" class="my-3 mx-4 py-2">
                     <VaultCard :vault="v" />
                 </div>
@@ -43,7 +43,7 @@ export default {
         return {
             account: computed(() => AppState.account),
             vaults: computed(() => AppState.vaults),
-            profile: computed(() => AppState.profiles),
+            profile: computed(() => AppState.activeProfile),
             keeps: computed(() => AppState.keeps),
 
         };
@@ -78,7 +78,7 @@ body {
   
 
   div {
-    width: 40vh;
+    width: 25vh;
   }
 }
 </style>

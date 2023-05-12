@@ -12,7 +12,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <img :src="keep.img" :alt="keep.name" class="img-fluid rounded">
+                            <img :src="keep?.img" :alt="keep.name" class="img-fluid rounded">
                         </div>
                         <div class="col-md-6">
                             <p class="p-2">{{ keep.description }}</p>
@@ -20,11 +20,11 @@
                                 v-if="keep?.creatorId == account?.id" class="btn btn-success">Edit Keep</button>
                             <button @click="deleteKeep(keep.id)" v-if="keep?.creatorId == account?.id"
                                 class="btn btn-danger mb-3 mt-3">Delete Keep</button>
-                            <VaultDropdown v-if="account?.id" :keep="keep" />
+                            <VaultDropdown v-if="account?.id && keep" :keep="keep" />
                         </div>
                     </div>
-                    <button @click="deleteVaultKeep(vaultKeepId)" v-if="keep?.creatorId == account?.id"
-                        class="btn btn-danger mb-3 mt-3">Delete Keep</button>
+                    <button v-if="vaultKeep?.creatorId == account?.id" @click="deleteVaultKeep(vaultKeep.vaultKeepId)" 
+                        class="btn btn-danger mb-3 mt-3">Remove Keep</button>
                     <p>Views: {{ keep?.views }}</p>
                     <p>Number Kept: {{ keep?.kept }}</p>
                 </div>
@@ -70,6 +70,7 @@ export default {
             keep: computed(() => AppState.activeKeep),
             account: computed(() => AppState.account),
             profile: computed(() => AppState.profiles),
+            vaultKeep: computed(() => AppState.activeVaultKeep),
             editable,
             async deleteKeep(keepId) {
                 try {
