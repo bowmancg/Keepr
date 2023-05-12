@@ -27,7 +27,7 @@
 import { AppState } from '../AppState';
 import { computed, reactive, onMounted, watchEffect } from 'vue';
 import Pop from '../utils/Pop';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { vaultsService } from '../services/VaultsService';
 import VaultKeepCard from '../components/VaultKeepCard.vue';
 import { vaultKeepsService } from '../services/VaultKeepsService';
@@ -35,13 +35,14 @@ import KeepDetailsModal from '../components/KeepDetailsModal.vue';
 export default {
     setup() {
         const route = useRoute();
+        const router = useRouter()
         async function getVaultById() {
             try {
                 let vaultId = route.params.vaultId;
                 await vaultsService.getVaultById(vaultId);
             }
             catch (error) {
-                Pop.error(error);
+                // Pop.error(error);
             }
         }
         async function getKeepsForVault() {
@@ -49,7 +50,8 @@ export default {
                 const vaultId = route.params.vaultId
                 await vaultKeepsService.getKeepsForVault(vaultId)
             } catch (error) {
-                Pop.error(error)
+                router.push({ name: 'Home'})
+                // Pop.error(error)
             }
         }
         watchEffect(() => {

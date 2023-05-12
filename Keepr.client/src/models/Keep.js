@@ -10,7 +10,7 @@ export class Keep {
         this.tags = data.tags
         this.kept = data.kept
         this.creatorId = data.creatorId
-        this.creator = new Profile(data.creator)
+        // this.creator = new Profile(data.creator)
         this.createdAt = new Date(data.createdAt)
         this.updatedAt = new Date(data.updatedAt)
         this.vaultKeepId = data.vaultKeepId

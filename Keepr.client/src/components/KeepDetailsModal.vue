@@ -62,7 +62,6 @@ export default {
         const editable = ref({});
         const route = useRoute();
         const router = useRouter()
-      
         onMounted(() => {
 
         });

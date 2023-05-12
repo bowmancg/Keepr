@@ -14,7 +14,7 @@
         </div>
         <div class="mb-3">
             <label for="isPrivate" class="form-label">Make Vault Private?</label>
-            <input type="checkbox" class="form-check-input">
+            <input type="checkbox" v-model="editable.isPrivate" class="form-check-input">
         </div>
         <button data-bs-dismiss="modal" type="submit" class="btn btn-success">Submit</button>
     </form>
@@ -34,7 +34,7 @@ export default {
     //     }
     // },
     setup(){
-        const editable = ref({})
+        const editable = ref({isPrivate: false})
         
         const route = useRoute()
         const router = useRouter()
@@ -45,6 +45,7 @@ export default {
             try {
                 const vaultData = editable.value
                 const vault = await vaultsService.createVault(vaultData)
+                editable.value = {isPrivate: false}
                 AppState.activeVault = null
                 await router.push({ name: 'Vault', params: { vaultId: vault.id } })
             } catch (error) {

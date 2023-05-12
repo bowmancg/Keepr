@@ -1,16 +1,25 @@
 <template>
     <div class="text-center container-fluid">
-        <div class="row">
-            <div class="col-12 pt-2">
-                <img :src="profile?.coverImg" alt="" class="hero-img mx-1 img-fluid elevation-3">
+        <div class="row justify-content-center">
+            <div class="col-12 mb-3 pt-2">
+                <img :src="profile?.coverImg" :alt="profile?.name" class="hero-img mx-1 img-fluid elevation-3">
             </div>
             <h1>Hello I am {{ profile?.name }}</h1>
-            <img :src="profile?.picture" alt="" class="rounded img-profile">
+            <img :src="profile?.picture" :alt="profile?.name" class="rounded img-profile">
         </div>
-        <section class="row  justify-content-start">
+        <section class="row mt-2 justify-content-start">
+            <h1 class="mb-3">Vaults</h1>
             <div class="col-12 masonry">
                 <div v-for="v in vaults" :key="v.id" class="my-3 mx-4 py-2">
                     <VaultCard :vault="v" />
+                </div>
+            </div>
+        </section>
+        <section class="row justify-content-start">
+            <h1>Keeps</h1>
+            <div class="col-12 masonry">
+                <div v-for="k in keeps" :key="k.id" class="my-3 mx-4 py-2">
+                    <KeepCard :keep="k" />
                 </div>
             </div>
         </section>
@@ -26,6 +35,7 @@ import Pop from '../utils/Pop';
 import { vaultsService } from '../services/VaultsService';
 import { profilesService } from '../services/ProfilesService';
 import { useRoute } from 'vue-router';
+import KeepCard from '../components/KeepCard.vue';
 export default {
     setup() {
         const route = useRoute()
@@ -37,8 +47,26 @@ export default {
                 Pop.error(error)
             }
         }
+        async function getProfileById() {
+            try {
+                const profileId = route.params.profileId
+                await profilesService.getProfileById(profileId)
+            } catch (error) {
+                Pop.error(error)
+            }
+        }
+        async function getProfileKeeps() {
+            try {
+                const profileId = route.params.profileId
+                await profilesService.getProfileKeeps(profileId)
+            } catch (error) {
+                Pop.error(error)
+            }
+        }
         watchEffect(() => {
             getVaultsForProfile()
+            getProfileKeeps()
+            getProfileById()
         })
         return {
             account: computed(() => AppState.account),
@@ -48,7 +76,7 @@ export default {
 
         };
     },
-    components: { VaultCard }
+    components: { VaultCard, KeepCard }
 };
 </script>
 
@@ -69,16 +97,16 @@ export default {
 }
 
 body {
-  margin: 0;
-  padding: 1rem;
+    margin: 0;
+    padding: 1rem;
 }
 
 .masonry {
-  columns: 300px;
-  
+    columns: 300px;
 
-  div {
-    width: 25vh;
-  }
+
+    div {
+        width: 25vh;
+    }
 }
 </style>
