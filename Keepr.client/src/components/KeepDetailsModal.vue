@@ -18,30 +18,33 @@
                             <p class="p-2">{{ keep.description }}</p>
                             <button data-bs-toggle="modal" data-bs-target="#editKeepForm"
                                 v-if="keep?.creatorId == account?.id" class="btn btn-success">Edit Keep</button>
-                            <button @click="deleteKeep(keep.id)" v-if="keep?.creatorId == account?.id"
+                            <button @click="deleteKeep(keep.id)" v-if="page != 'Vault' && keep?.creatorId == account?.id"
                                 class="btn btn-danger mb-3 mt-3">Delete Keep</button>
                             <VaultDropdown v-if="account?.id && keep" :keep="keep" />
                         </div>
                     </div>
-                    <button v-if="vaultKeep?.creatorId == account?.id" @click="deleteVaultKeep(vaultKeep.id)" 
+                    <button v-if="page == 'Vault' && vaultKeep?.creatorId == account?.id" @click="deleteVaultKeep(vaultKeep.id)" 
                         class="btn btn-danger mb-3 mt-3">Remove Keep</button>
-                    <p>Views: {{ keep?.views }}</p>
-                    <p>Number Kept: {{ keep?.kept }}</p>
+                    <p><span class="mdi mdi-eye"></span> {{ keep?.views }}</p>
+                    <p><span class="mdi mdi-archive"></span> {{ keep?.kept }}</p>
                 </div>
-                    <img @click="goToProfile(account.id)" :src="keep.creator?.picture" alt="" class="img-fluid m-3 profile-picture">
+                    {{ keep.creator?.name }}
+                    <div >
+                        <img @click="goToProfile(keep.creator?.id)" :src="keep.creator?.picture" :alt="keep.creator?.name" class="img-fluid m-3 profile-picture">
+                    </div>
                 <div>
                 </div>
             </div>
         </div>
     </div>
-    <Modal id="editKeepForm">
+    <ModalComponent id="editKeepForm">
         <template #header>
             <h5>Edit Keep</h5>
         </template>
         <template #modalBody>
             <EditKeepForm />
         </template>
-    </Modal>
+    </ModalComponent>
 </template>
 
 
@@ -51,19 +54,23 @@ import { computed, reactive, onMounted, ref } from 'vue';
 import Pop from '../utils/Pop';
 import { keepsService } from '../services/KeepsService';
 import { useRoute, useRouter } from 'vue-router';
-import Modal from './Modal.vue';
+import ModalComponent from './Modal.vue';
 import EditKeepForm from './EditKeepForm.vue';
 import { vaultKeepsService } from '../services/VaultKeepsService';
 import VaultDropdown from './VaultDropdown.vue';
 import { Profile } from '../models/Account';
+import { logger } from '../utils/Logger';
+import { Modal } from 'bootstrap';
 export default {
     
     setup() {
         const editable = ref({});
         const route = useRoute();
         const router = useRouter()
-        onMounted(() => {
+        const page = route.name
 
+        onMounted(() => {
+            console.log(route.name, 'ROUTE')
         });
         return {
             keep: computed(() => AppState.activeKeep),
@@ -71,6 +78,7 @@ export default {
             profile: computed(() => AppState.profiles),
             vaultKeep: computed(() => AppState.activeVaultKeep),
             editable,
+            page,
             async deleteKeep(keepId) {
                 try {
                     if (await Pop.confirm('Are you sure you want to delete this?')) {
@@ -89,6 +97,9 @@ export default {
                 }
             },
             async goToProfile(profileId) {
+                logger.log(profileId)
+                //todo close modal somehow
+                Modal.getOrCreateInstance('#editKeepForm').hide()
                 router.push({ name: 'Profile', params: { profileId: profileId } })
             },
             async deleteVaultKeep(vaultKeepId) {
@@ -102,7 +113,7 @@ export default {
             }
         };
     },
-    components: { Modal, EditKeepForm, VaultDropdown }
+    components: { ModalComponent, EditKeepForm, VaultDropdown }
 };
 </script>
 

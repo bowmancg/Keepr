@@ -4,6 +4,22 @@
   </header>
   <main>
     <router-view />
+    <Modal id="createKeepForm">
+    <template #header>
+      <h5>Create Keep</h5>
+    </template>
+    <template #modalBody>
+      <CreateKeepForm />
+    </template>
+  </Modal>
+  <Modal id="createVaultForm">
+    <template #header>
+      <h5>Create Vault</h5>
+    </template>
+    <template #modalBody>
+      <CreateVaultForm />
+    </template>
+  </Modal>
   </main>
 </template>
 
@@ -11,6 +27,8 @@
 import { computed } from 'vue'
 import { AppState } from './AppState'
 import Navbar from './components/Navbar.vue'
+import CreateKeepForm from './components/CreateKeepForm.vue'
+import CreateVaultForm from './components/CreateVaultForm.vue'
 
 export default {
   setup() {
@@ -18,7 +36,7 @@ export default {
       appState: computed(() => AppState)
     }
   },
-  components: { Navbar }
+  components: { Navbar, CreateKeepForm, CreateVaultForm }
 }
 </script>
 <style lang="scss">

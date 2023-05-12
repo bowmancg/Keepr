@@ -12,9 +12,9 @@
         <p class="fs-3 text-center">{{ vaultKeeps.length }} Keeps</p>
     </section>
     <section class="row justify-content-center">
-        <div class="masonry" v-if="vaultKeeps && vaultKeeps.length > 0">
+        <div class="masonry mt-3 p-3" v-if="vaultKeeps && vaultKeeps.length > 0">
             <div data-bs-toggle="modal" data-bs-target="#keepModal" @click="selectVaultKeep(v)" v-for="v in vaultKeeps"
-            :key="v.id" class="">
+            :key="v.id" class="mb-3">
             <VaultKeepCard :vaultKeep="v" />
         </div>
     </div>
@@ -42,7 +42,7 @@ export default {
                 await vaultsService.getVaultById(vaultId);
             }
             catch (error) {
-                // Pop.error(error);
+                Pop.error(error);
             }
         }
         async function getKeepsForVault() {
@@ -79,7 +79,9 @@ export default {
 <style lang="scss" scoped>
 .vault-img {
     height: 40vh;
-    width: 50%;
+    object-fit: cover;
+    width: 100%;
+    object-position: center;
 }
 
 body {

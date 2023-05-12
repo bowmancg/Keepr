@@ -1,7 +1,8 @@
 <template>
-  <div class="mt-3 p-3 masonry">
 
-    <div class="card mb-3" data-bs-toggle="modal" data-bs-target="#keepModal" @click="selectKeep(k)" v-for="k in keeps"
+    <div class="mt-3 p-3 masonry">
+      
+      <div class="mb-3 p-3" data-bs-toggle="modal" data-bs-target="#keepModal" @click="selectKeep(k)" v-for="k in keeps"
       :key="k.id">
       <KeepCard :keep="k" />
     </div>
@@ -52,15 +53,29 @@ export default {
 <style scoped lang="scss">
 body {
   margin: 0;
-  padding: 1rem;
+  padding: 2rem;
 }
 
 .masonry {
   columns: 300px;
+  column-count: 4;
   
-
   div {
     width: 25vh;
+  }
+}
+
+@media (max-width: 425px) {
+  body {
+    margin: 5px;
+    padding: 1rem;
+  }
+  .masonry {
+    column-count: 2;
+    
+    div {
+      width: 25vh;
+    }
   }
 }
 </style>

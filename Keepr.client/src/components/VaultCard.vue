@@ -1,11 +1,14 @@
 <template>
-    <button @click="deleteVault(vault.id)" class="btn btn-danger">Delete Vault</button>
-    <router-link :to="{ name: 'Vault', params: { vaultId: vault.id } }">
-        <div class="text-center rounded p-3 mt-4 mb-4">
-            <img :src="vault?.img" :alt="vault.name" class="img-fluid rounded">
-            <p>{{ vault?.name }}</p>
-        </div>
-    </router-link>
+    <div class="container justify-content-center d-flex row">
+            <button v-if="account.id == vault.creatorId" @click="deleteVault(vault.id)" class="btn btn-danger rounded-pill">Delete Vault</button>
+            <router-link :to="{ name: 'Vault', params: { vaultId: vault.id } }">
+                <div class="text-center rounded p-3 mt-4 mb-4">
+                    <span v-if="vault.isPrivate != false" class="mdi mdi-lock"></span>
+                    <img :src="vault?.img" :alt="vault.name" class="img-fluid rounded">
+                    <p>{{ vault?.name }}</p>
+                </div>
+            </router-link>
+    </div>
 </template>
 
 

@@ -2,11 +2,11 @@
   <div class="text-center container-fluid">
     <div class="row">
       <div class="col-12 pt-2">
-        <img :src="account?.coverImg" :alt="account.name" class="hero-img mx-1 img-fluid elevation-3">
+        <img :src="account?.coverImg" :alt="account.name" class="hero-img mx-1 mt-2 img-fluid elevation-3">
       </div>
     </div>
     <h1>Welcome</h1>
-    <img class="rounded img-profile" :src="account.picture" :alt="account.name" />
+    <img class="profile-picture" :src="account.picture" :alt="account.name" />
     <p>{{ account.name }}</p>
     <button data-bs-toggle="modal" data-bs-target="#editAccountForm" class="btn btn-success">Edit Account</button>
   </div>
@@ -67,10 +67,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.img-profile {
-  max-width: 100px;
-
-}
 
 .hero-img {
   object-fit: cover;
@@ -88,20 +84,17 @@ body {
 }
 
 .masonry-with-flex {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  max-height: 1000px;
+  columns: 300px;
 
   div {
-    width: 40vh;
-    background: #7ce548;
-    color: white;
-    margin: 0 1rem 1rem 0;
-    text-align: center;
-    font-family: system-ui;
-    font-weight: 900;
-    font-size: 2rem;
+    width: 30vh;
   }
+}
+
+.profile-picture {
+    height: 10vh;
+    width: 10vh;
+    border-radius: 50%;
+    box-shadow: 0 0 10px black;
 }
 </style>
